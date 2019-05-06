@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{ block.super }} | Add Products to Pricelist{% endblock %}
+
+{% block content %}
+<h2>Pricelist: {{ pricelist }}</h2>
+<ul>
+{% for product in pricelist.pricelistproduct_set.all %}
+  <li>
+    {{forloop.counter}}.
+    <strong>Product</strong>: {{ product.product }},
+    <strong>Price</strong>: {{ product.price }}
+  </li>
+{% empty %}
+  <li><strong>No products added yet.</strong></li>
+{% endfor %}
+</ul>
+
+<h3>Add Product</h3>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
